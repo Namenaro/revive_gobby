@@ -3,6 +3,12 @@ from selectors.utils import load_np_from_json
 import easygui
 import matplotlib.pyplot as plt
 
+"""
+Use:
+1) select in dialogue file with numpy dataset of interest (shape NxMxY)
+2) see a picture with first several examples of the the first lead
+"""
+
 def select_and_load_np_data():
     file_path = easygui.fileopenbox("Select json with numpy data")
     return load_np_from_json(file_path)
