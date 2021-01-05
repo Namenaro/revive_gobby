@@ -13,3 +13,7 @@ def load_np_from_json(file_path):
     b_new = json.loads(obj_text)
     a_new = np.array(b_new)
     return a_new
+
+
+
+
