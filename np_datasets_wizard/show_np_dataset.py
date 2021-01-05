@@ -1,4 +1,4 @@
-from selectors.utils import load_np_from_json
+from np_datasets_wizard.utils import load_np_from_json
 
 import easygui
 import matplotlib.pyplot as plt

@@ -92,5 +92,14 @@ def train_gan(gan, n_epochs, dataset_object, contrast_object=None):
             )
 
 
-
-
+if __name__ == "__main__":
+    from GAN_wizard.GAN1.gan import GAN
+    from np_datasets_wizard.torch_dataset import UnsupervisedDataset
+    n_epochs=150
+    gan = GAN(latent_dim=6,
+                 n_classes=2,
+                 patch_len=256,
+                 num_channels=1,
+              code_dim=1)
+    dataset_object = UnsupervisedDataset()
+    train_gan(gan, n_epochs, dataset_object, contrast_object=None)

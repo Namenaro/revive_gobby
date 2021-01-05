@@ -1,6 +1,6 @@
-from GANs.GAN1.discr import Discriminator
-from GANs.GAN1.gen import Generator
-from GANs.utils import to_categorical
+from GAN_wizard.GAN1.discr import Discriminator
+from GAN_wizard.GAN1.gen import Generator
+from GAN_wizard.utils import to_categorical
 
 
 import torch
@@ -11,12 +11,14 @@ class GAN:
     def __init__(self, latent_dim,
                  n_classes,
                  patch_len,
-                 num_channels
+                 num_channels,
+                 code_dim
                  ):
         self.latent_dim = latent_dim
         self.n_classes = n_classes
         self.patch_len = patch_len
         self.num_channels = num_channels
+        self.code_dim = code_dim
 
         self.adversarial_loss = torch.nn.MSELoss()
         self.categorical_loss = torch.nn.CrossEntropyLoss()

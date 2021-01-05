@@ -1,5 +1,5 @@
 from settings import PATH_TO_NUMPY_DATA_FOLDER
-from selectors.utils import np_to_json
+from np_datasets_wizard.utils import np_to_json
 import easygui
 import json
 import numpy as np
