@@ -9,7 +9,7 @@ class Generator(nn.Module):
         self.n_classes = n_classes
         self.code_dim = code_dim
         self.num_channels = num_channels
-
+        self.patch_len = patch_len
         input_dim = latent_dim + n_classes + code_dim
 
         self.init_len = patch_len // 4
