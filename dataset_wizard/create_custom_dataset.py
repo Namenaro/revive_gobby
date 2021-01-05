@@ -17,12 +17,12 @@ def save_new_dataset_by_ids(old_json, ecg_ids_to_save, name_new_dataset):
     :return:
     """
     import json
-    from settings import PATH_TO_DATASETS_FOLDER
+    from settings import PATH_TO_METADATASETS_FOLDER
     new_json_data = {}
     for ecg_id in old_json.keys():
         if ecg_id in ecg_ids_to_save:
             new_json_data[ecg_id]= old_json[ecg_id]
-    result_file_path = PATH_TO_DATASETS_FOLDER + "\\" + name_new_dataset
+    result_file_path = PATH_TO_METADATASETS_FOLDER + "\\" + name_new_dataset
     with open(result_file_path, 'w') as outfile:
         json.dump(new_json_data, outfile)
 

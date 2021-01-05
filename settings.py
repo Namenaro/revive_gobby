@@ -2,8 +2,9 @@
 
 
 LEADS = ['i', 'ii', 'iii', 'avr', 'avl', 'avf', 'v1', 'v2', 'v3', 'v4', 'v5', 'v6']
-PATH_TO_DATASETS_FOLDER = "C:\\mywork\\revive_gobby\\dataset_instanses"
+PATH_TO_METADATASETS_FOLDER = "C:\\mywork\\revive_gobby\\dataset_instanses"
 PATH_TO_NUMPY_DATA_FOLDER = "C:\\mywork\\revive_gobby\\np_dataset_instanses"
+PATH_TO_MODELS = "C:\\mywork\\revive_gobby\\models_instanses"
 
 def load_initial_200_ECGs():
     """
