@@ -15,4 +15,4 @@ def feed_np_batch_to_discriminator(model, numpy_batch):
     Tensor = torch.cuda.FloatTensor if cuda else torch.FloatTensor
     ecg_batch = Variable(Tensor(numpy_batch))
     validity, label, latent_code = model(ecg_batch)
-    return validity.detach().numpy(), label.detach().numpy(), latent_code.detach().numpy()
+    return validity.cpu().detach().numpy(), label.cpu().detach().numpy(), latent_code.cpu().detach().numpy()

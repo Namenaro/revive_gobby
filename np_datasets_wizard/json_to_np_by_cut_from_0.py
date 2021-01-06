@@ -9,23 +9,10 @@ def get_lead_signal(ecg, lead_name):
     return ecg['Leads'][lead_name]['Signal']
 
 
-def get_triplets_qrs(ecg, lead_name='i'):
-    return ecg['Leads'][lead_name]['DelineationDoc']['qrs']
-
-
-def get_triplets_t(ecg, lead_name='i'):
-    return ecg['Leads'][lead_name]['DelineationDoc']['p']
-
-
-def get_triplets_p(ecg, lead_name='i'):
-    return ecg['Leads'][lead_name]['DelineationDoc']['t']
-
-
-def cut_from_signal(ecg, center_point, leads_names, patch_len):
+def cut_from_signal(ecg, start_point, leads_names, patch_len):
     result = []
     for lead_name in leads_names:
         lead_signal = get_lead_signal(ecg, lead_name)
-        start_point = center_point - int(patch_len / 2)
         end_point = start_point + patch_len
         if start_point < 0 or end_point > len(lead_signal):
             return None
@@ -34,15 +21,13 @@ def cut_from_signal(ecg, center_point, leads_names, patch_len):
 
 
 def get_numpy_from_json(json_data, patch_len, leads_names):
+    start_point = 0
     result = []
     for patient_id in json_data.keys():
         patient = json_data[patient_id]
-        triplets = get_triplets_qrs(patient)
-        for triplet in triplets:
-            center_point = triplet[1]
-            cutted = cut_from_signal(patient, center_point, leads_names, patch_len)
-            if cutted is not None:
-                result.append(cutted)
+        cutted = cut_from_signal(patient, start_point, leads_names, patch_len)
+        if cutted is not None:
+            result.append(cutted)
     return np.array(result)
 
 
@@ -62,4 +47,4 @@ def make_and_save_dataset(patch_len, name, leads_names):
 
 
 if __name__ == "__main__":
-    make_and_save_dataset(4999, "4999_for_visualisation", ["i"])
+    make_and_save_dataset(4998, "4998_i_for_visualis", ["i"])

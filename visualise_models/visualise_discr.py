@@ -13,7 +13,8 @@ def make_cuttings_one_signal(patch_len, np_signal):
     half_patch_len = int(patch_len/2)
     padding = half_patch_len + 2
     start_point = padding
-    end_point = len(np_signal) - padding
+    signal_len = np_signal.shape[1]
+    end_point = signal_len - padding
 
     coords_iterator = range(start_point, end_point)
     all_patches = []
@@ -26,22 +27,23 @@ def make_cuttings_one_signal(patch_len, np_signal):
     return np.array(all_patches), start_point, end_point
 
 
-def get_some_test_patients_numpy():
-    np_dataset = select_and_load_np_data()
-    return np_dataset[:3]
-
 def draw(validity, label, latent_code, ecg_signal):
-    plt.subplot(2, 1, 1)
+    plt.subplot(3, 1, 1)
     plt.plot(validity, '-', lw=2)
-
-    plt.xlabel('measurements ')
+    plt.title("Validity")
     plt.grid(True)
 
-    plt.subplot(2, 1, 2)
-    plt.plot(ecg_signal, '-', lw=2)
+    plt.subplot(3, 1, 2)
+    plt.plot(ecg_signal[0,:], '-', lw=2)
     plt.title('ECG')
-
     plt.grid(True)
+
+    plt.subplot(3, 1, 3)
+    print ("label_shape:" + str(label.shape))
+    plt.plot(label[:, 0], '-', lw=2)
+    plt.title('babel_code_0')
+    plt.grid(True)
+
     plt.tight_layout()
     plt.show()
 
@@ -49,9 +51,11 @@ def make_visualisation(discr_model=None):
     if discr_model is None:
         discr_model = restore_model_from_file()
     patch_len = discr_model.patch_len
-    np_data = get_some_test_patients_numpy()
+    np_data = select_and_load_np_data()
     for np_signal in np_data:
+        print("one signal shape = "+ str(np_signal.shape))
         numpy_batch, start_point, end_point = make_cuttings_one_signal(patch_len, np_signal)
+        print(numpy_batch.shape)
         validity, label, latent_code = feed_np_batch_to_discriminator(discr_model, numpy_batch)
         draw(validity, label, latent_code, np_signal[:, start_point:end_point])
 
