@@ -1,4 +1,4 @@
-from settings import load_initial_200_ECGs
+from settings import load_json_dset_with_delin
 from dataset_wizard.query_specific_ECGS import Query
 from dataset_wizard.create_custom_dataset import get_ecgs_by_query, save_new_dataset_by_ids
 from dataset_wizard.dataset_to_html import draw_ecgs_from_json_to_html_by_ids
@@ -6,7 +6,7 @@ from settings import PATH_TO_METADATASETS_FOLDER
 
 def CREATE_7_pacients_ideally_healthy_and_normal_axis():
     ########################----- Load dataset ---################
-    json_data = load_initial_200_ECGs()
+    json_data = load_json_dset_with_delin()
 
     ########################----- Make a Query ---################
     diags = {"regular_normosystole": True,

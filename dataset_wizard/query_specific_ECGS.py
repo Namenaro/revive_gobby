@@ -1,5 +1,5 @@
 import re
-from settings import load_initial_200_ECGs
+from settings import load_json_dset_with_delin
 
 
 class Query:

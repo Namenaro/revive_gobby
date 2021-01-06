@@ -7,7 +7,13 @@ class Discriminator(nn.Module):
                  patch_len,
                  num_channels):
         super(Discriminator, self).__init__()
+
         self.patch_len = patch_len
+        self.n_classes = n_classes
+        self.code_dim = code_dim
+        self.num_channels = num_channels
+
+
         def downscale_block(in_filters, out_filters, bn=False):
             block = [nn.Conv1d(in_filters, out_filters, 9, 2, 4), nn.LeakyReLU(0.2, inplace=True), nn.Dropout(0.25)]
             if bn:

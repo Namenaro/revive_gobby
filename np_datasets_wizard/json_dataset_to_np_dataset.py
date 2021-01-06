@@ -62,4 +62,4 @@ def make_and_save_dataset(patch_len, name, leads_names):
 
 
 if __name__ == "__main__":
-    make_and_save_dataset(256, "one_ideal_256", ["i"])
+    make_and_save_dataset(4999, "4999_for_visualisation", ["i"])

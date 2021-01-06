@@ -18,20 +18,36 @@ def save_model_to_file(mymodel, filename):
 
     module_path = str(mymodel.__class__.__module__)
     class_name = str(mymodel.__class__.__name__)
+    if class_name == "Generator":
+        torch.save({
+            'model_state_dict': mymodel.state_dict(),
 
-    torch.save({
-        'model_state_dict': mymodel.state_dict(),
+            'module_path': module_path,
+            'class_name': class_name,
 
-        'module_path': module_path,
-        'class_name': class_name,
+            # -- hyperparams---
+            'latent_dim': mymodel.latent_dim,
+            'n_classes': mymodel.n_classes,
+            'patch_len': mymodel.patch_len,
+            'num_channels': mymodel.num_channels,
+            'code_dim': mymodel.code_dim
+        }, path_file)
+    else:
+        if class_name == "Discriminator":
+            torch.save({
+                'model_state_dict': mymodel.state_dict(),
 
-        # -- hyperparams---
-        'latent_dim': mymodel.latent_dim,
-        'n_classes': mymodel.n_classes,
-        'patch_len': mymodel.patch_len,
-        'num_channels': mymodel.num_channels,
-        'code_dim': mymodel.code_dim
-    }, path_file)
+                'module_path': module_path,
+                'class_name': class_name,
+
+                # -- hyperparams---
+                'n_classes': mymodel.n_classes,
+                'patch_len': mymodel.patch_len,
+                'num_channels': mymodel.num_channels,
+                'code_dim': mymodel.code_dim
+            }, path_file)
+        else:
+            print ("Failed to save a model: unknown class.")
 
 
 def restore_model_from_file(filename=None):
@@ -43,11 +59,20 @@ def restore_model_from_file(filename=None):
     class_name = checkpoint['class_name']
     myclass = getattr(import_module(module_path), class_name)
 
-    model = myclass(latent_dim=checkpoint['latent_dim'],
-                    n_classes=checkpoint['n_classes'],
-                    patch_len=checkpoint['patch_len'],
-                    num_channels=checkpoint['num_channels'],
-                    code_dim=checkpoint['code_dim'])
+    if class_name == "Generator":
+        model = myclass(latent_dim=checkpoint['latent_dim'],
+                        n_classes=checkpoint['n_classes'],
+                        patch_len=checkpoint['patch_len'],
+                        num_channels=checkpoint['num_channels'],
+                        code_dim=checkpoint['code_dim'])
+    else:
+        if class_name == "Discriminator":
+            model = myclass(n_classes=checkpoint['n_classes'],
+                            patch_len=checkpoint['patch_len'],
+                            num_channels=checkpoint['num_channels'],
+                            code_dim=checkpoint['code_dim'])
+        else:
+            print("Failed to restore a model: unknown class.")
 
     model.load_state_dict(checkpoint['model_state_dict'])
     model.eval()
@@ -59,7 +84,7 @@ if __name__ == "__main__":
     from np_datasets_wizard.torch_dataset import UnsupervisedDataset
     from GAN_wizard.train import train_gan
 
-    n_epochs = 1
+    n_epochs = 10
     gan = GAN(latent_dim=6,
               n_classes=2,
               patch_len=256,
@@ -67,6 +92,6 @@ if __name__ == "__main__":
               code_dim=1)
     dataset_object = UnsupervisedDataset()
     train_gan(gan, n_epochs, dataset_object, contrast_object=None)
-    save_model_to_file(gan.generator, "256_one_epoch.gen")
+    save_model_to_file(gan.discriminator, "265_10_epoch.discr")
     model = restore_model_from_file()
-    print(model.latent_dim)
+    print("Model was saved.")

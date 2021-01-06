@@ -22,6 +22,6 @@ def print_diagnosis_distribution(json_data):
         print(w, feature_num_trues[w])
 
 if __name__ == "__main__":
-    from settings import load_initial_200_ECGs
-    data = load_initial_200_ECGs()
+    from settings import load_json_dset_with_delin
+    data = load_json_dset_with_delin()
     print_diagnosis_distribution(data)
