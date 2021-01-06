@@ -1,19 +1,8 @@
-import argparse
-import os
-import numpy as np
-import math
+from GAN_wizard.sample_input_for_gen import sample_input_for_generator
+
 import itertools
-from typing import NamedTuple
-
-import torchvision.transforms as transforms
-from torchvision.utils import save_image
-
 from torch.utils.data import DataLoader
-from torchvision import datasets
 from torch.autograd import Variable
-
-import torch.nn as nn
-import torch.nn.functional as F
 import torch
 
 
@@ -21,7 +10,6 @@ def train_gan(gan, n_epochs, dataset_object, contrast_object=None):
     cuda = True if torch.cuda.is_available() else False
 
     FloatTensor = torch.cuda.FloatTensor if cuda else torch.FloatTensor
-    LongTensor = torch.cuda.LongTensor if cuda else torch.LongTensor
 
     # Optimizers
     lr = 0.0002
@@ -55,7 +43,8 @@ def train_gan(gan, n_epochs, dataset_object, contrast_object=None):
             real_ecgs = Variable(ecgs.type(FloatTensor))
 
             # -----------------Train Generator-----------------
-            z, label_input_one_hot, code_input, label_input_int = gan.sample_input_for_generator(batch_size)
+            z, label_input_one_hot, code_input, label_input_int = \
+                sample_input_for_generator(gan.generator, batch_size)
             gen_ecgs = gan.generator(z, label_input_one_hot, code_input)
             validity, _, _ = gan.discriminator(gen_ecgs)
             g_loss = gan.adversarial_loss(validity, valid)

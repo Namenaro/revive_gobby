@@ -29,8 +29,9 @@ def np_arr_1d_to_pic(np_arr_1d):
     plt.tight_layout()
     plt.show()
 
-def show_np_dataset_1st_lead():
-    np_arr = select_and_load_np_data()
+def show_np_dataset_1st_lead(np_arr=None):
+    if np_arr is None:
+        np_arr = select_and_load_np_data()
     to_show = []
     for i in range(len(np_arr)):
         to_show.append(np_arr[i][0])

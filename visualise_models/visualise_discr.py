@@ -1,10 +1,6 @@
-from settings import load_test_ECGs_no_delin
 from GAN_wizard.save_restore_model import restore_model_from_file
 from GAN_wizard.utils import feed_np_batch_to_discriminator
-from np_datasets_wizard.utils import one_patient_to_np
 from np_datasets_wizard.show_np_dataset import select_and_load_np_data
-
-
 
 import numpy as np
 import matplotlib.pyplot as plt
