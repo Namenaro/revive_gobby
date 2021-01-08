@@ -6,6 +6,11 @@ from np_datasets_wizard.utils import one_patient_to_np
 import numpy as np
 import matplotlib.pyplot as plt
 
+def make_measurement(model, np_batch):
+    validity, label, latent_code = feed_np_batch_to_discriminator(model, np_batch)
+    # TODO may be concatenate them
+    measurement = latent_code
+    return validity, measurement
 
 def get_all_signal_patches_for_every_u(u_list, model, selector, json_data):
     num_leads = model.num_channels

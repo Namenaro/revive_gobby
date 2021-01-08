@@ -67,3 +67,4 @@ def save_np_u_selectors(cutted_signals_batch, contexts_batch, name):
     np_to_json(np.array(contexts_batch), measurs_filename)
     print ("Saved signal: " + signal_patches_filename)
     print("Saved context: " + measurs_filename)
+

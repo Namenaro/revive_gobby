@@ -8,11 +8,6 @@ from settings import PATH_TO_SELECTORS
 import numpy as np
 import json
 
-def make_measurement(model, np_batch):
-    validity, label, latent_code = feed_np_batch_to_discriminator(model, np_batch)
-    # TODO may be concatenate them
-    measurement = latent_code
-    return validity, measurement
 
 
 def process_one_json_node(threshold, json_node, model):

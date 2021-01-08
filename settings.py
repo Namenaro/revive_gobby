@@ -9,6 +9,7 @@ PATH_TO_METADATASETS_FOLDER = "C:\\mywork\\revive_gobby\\dataset_instanses"
 PATH_TO_NUMPY_DATA_FOLDER = "C:\\mywork\\revive_gobby\\np_dataset_instanses"
 PATH_TO_MODELS = "C:\\mywork\\revive_gobby\\models_instanses"
 PATH_TO_SELECTORS = "C:\\mywork\\revive_gobby\\selectors_instances\\"
+PATH_TO_SAMPLES_FROM_MODELS = "C:\\mywork\\revive_gobby\\model_samples_instances\\"
 
 def load_json_dset_with_delin():
     """
