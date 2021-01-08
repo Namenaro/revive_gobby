@@ -27,5 +27,5 @@ def one_patient_to_np(num_leads, patient_json_node):
     for lead_name in leads_names:
         lead_signal = get_lead_signal(patient_json_node, lead_name)
         res.append(lead_signal)
-    return np.arrray(res)
+    return np.array(res)
 

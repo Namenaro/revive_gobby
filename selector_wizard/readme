@@ -1,0 +1,9 @@
+Selector has structure:
+{
+    "dataset": "some/path/to/dataset"  # PATH TO INITIAL JSON DATASET, WICH WAS USED TO CREATE THAT SELECTOR
+    patient_id: {point:measurement}
+   }
+
+ Here patient_ids are the keys of dictionary and they are the same as keys in initial dataset.
+ {point:measurement} is a dictionary with
+ coordinates as keys, and measurements (by model at these coordinates) as values.
