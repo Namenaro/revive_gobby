@@ -11,8 +11,8 @@ def example_scenario_1():
     ########################----- Make a Query ---################
     diags = {}
     substrs = []
-    HR_l=65
-    HR_r=75
+    HR_l=85
+    HR_r=95
     unwanted_substrs = []
     query = Query(diagnosys_names=diags,
                   substrs=substrs,

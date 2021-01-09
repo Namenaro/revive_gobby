@@ -31,7 +31,7 @@ class Discriminator(nn.Module):
         ds_len = patch_len // 2 ** 4
 
         # Output layers
-        self.adv_layer = nn.Sequential(nn.Linear(128 * ds_len, 1))
+        self.adv_layer = nn.Sequential(nn.Linear(128 * ds_len, 1), nn.Sigmoid())
         self.aux_layer = nn.Sequential(nn.Linear(128 * ds_len, n_classes), nn.Softmax(dim=-1))
         self.latent_layer = nn.Sequential(nn.Linear(128 * ds_len, code_dim))
 

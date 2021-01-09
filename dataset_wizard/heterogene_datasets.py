@@ -12,11 +12,11 @@ def create_hetero():
     json_data = load_json_dset_with_delin()
 
     ########################----- List ids ---################
-    ecgs_ids = ["TODO"]
+    ecgs_ids = ['50437173', '50647195', '50490066']
 
     ################ Visualise ################
     message = "Selected ECGs were: " + str(ecgs_ids)
-    name = "hetero"
+    name = "unhealth_fast_3"
     folder = PATH_TO_METADATASETS_FOLDER
     draw_ecgs_from_json_to_html_by_ids(json_data,
                                        ecgs_ids,
