@@ -14,11 +14,11 @@ def get_triplets_qrs(ecg, lead_name='i'):
 
 
 def get_triplets_t(ecg, lead_name='i'):
-    return ecg['Leads'][lead_name]['DelineationDoc']['p']
+    return ecg['Leads'][lead_name]['DelineationDoc']['t']
 
 
 def get_triplets_p(ecg, lead_name='i'):
-    return ecg['Leads'][lead_name]['DelineationDoc']['t']
+    return ecg['Leads'][lead_name]['DelineationDoc']['p']
 
 
 def cut_from_signal(ecg, center_point, leads_names, patch_len):
@@ -37,7 +37,7 @@ def get_numpy_from_json(json_data, patch_len, leads_names):
     result = []
     for patient_id in json_data.keys():
         patient = json_data[patient_id]
-        triplets = get_triplets_qrs(patient)
+        triplets = get_triplets_t(patient)
         for triplet in triplets:
             center_point = triplet[1]
             cutted = cut_from_signal(patient, center_point, leads_names, patch_len)

@@ -75,3 +75,6 @@ def draw_all_dataset_to_html(json_data,
                                        folder,
                                        message,
                                        leads_to_draw)
+if __name__ == "__main__":
+    pass
+

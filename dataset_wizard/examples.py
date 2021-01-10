@@ -9,10 +9,10 @@ def example_scenario_1():
     json_data = load_json_dset_with_delin()
 
     ########################----- Make a Query ---################
-    diags = {}
-    substrs = []
-    HR_l=85
-    HR_r=95
+    diags = {'electric_axis_normal':False}
+    substrs = ["стимул"]
+    HR_l=0
+    HR_r=200
     unwanted_substrs = []
     query = Query(diagnosys_names=diags,
                   substrs=substrs,
@@ -21,11 +21,11 @@ def example_scenario_1():
                   HR_to=HR_r
                   )
     ecgs_ids = get_ecgs_by_query(json_data, query)
-
+    ecgs_ids = ecgs_ids[:10]
     ################ Visualise result of the Query ################
     message = "Query result for " + str(query.diagnosys_names)
-    name = "some"
-    folder = "test"
+    name = "unnormal_axis10"
+    folder = PATH_TO_METADATASETS_FOLDER
     draw_ecgs_from_json_to_html_by_ids(json_data,
                                        ecgs_ids,
                                        name_html=name + ".html",
@@ -48,11 +48,11 @@ def example_scenario_2():
     json_data = load_json_dset_with_delin()
 
     ########################----- List ids ---################
-    ecgs_ids = []
+    ecgs_ids = ['50488354']
 
     ################ Visualise   ################
     message = "Selected ECGs were: " + str(ecgs_ids)
-    name = "some"
+    name = "stimulator1"
     folder = PATH_TO_METADATASETS_FOLDER
     draw_ecgs_from_json_to_html_by_ids(json_data,
                                        ecgs_ids,
@@ -70,4 +70,4 @@ def example_scenario_2():
 
 
 if __name__ == "__main__":
-    example_scenario_1()
+    example_scenario_2()
