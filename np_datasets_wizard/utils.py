@@ -13,9 +13,13 @@ def np_to_json(np_arr, file_path):
     json.dump(b, codecs.open(file_path, 'w', encoding='utf-8'),
               separators=(',', ':'), sort_keys=True, indent=4)
 
-def load_np_from_json(file_path=None):
+def load_np_from_json(file_path=None, text=None):
+    if text is None:
+        text = "select file with numpy dataset"
     if file_path is None:
-        file_path = easygui.fileopenbox("select file with numpy dataset")
+        file_path = easygui.fileopenbox(text)
+        if file_path is None:
+            return None
     obj_text = codecs.open(file_path, 'r', encoding='utf-8').read()
     b_new = json.loads(obj_text)
     a_new = np.array(b_new)
