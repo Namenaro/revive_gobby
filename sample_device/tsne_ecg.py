@@ -5,6 +5,7 @@ import seaborn as sns
 
 from np_datasets_wizard.utils import load_np_from_json
 
+
 sns.set_style('darkgrid')
 sns.set_palette('muted')
 sns.set_context("notebook", font_scale=1.5,

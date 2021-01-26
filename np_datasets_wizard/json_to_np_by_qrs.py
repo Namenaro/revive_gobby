@@ -1,5 +1,6 @@
 from settings import PATH_TO_NUMPY_DATA_FOLDER
 from np_datasets_wizard.utils import np_to_json
+
 import easygui
 import json
 import numpy as np
@@ -21,6 +22,8 @@ def get_triplets_t(ecg, lead_name='i'):
 def get_triplets_p(ecg, lead_name='i'):
     return ecg['Leads'][lead_name]['DelineationDoc']['p']
 
+def get_triplets(patient, component, lead_name='i'):
+    return patient['Leads'][lead_name]['DelineationDoc'][component]
 
 def cut_from_signal(ecg, center_point, leads_names, patch_len):
     result = []
@@ -39,19 +42,19 @@ def get_shift(mode=None):
     if mode == "normal":
         return np.random.normal(0.0, SHIFT_DISPERSIA)
 
-def get_numpy_from_json(json_data, patch_len, leads_names):
+def get_numpy_from_json(json_data, patch_len, leads_names, component="qrs", constant_shift=0):
     result = []
     labels = []
     for patient_id in json_data.keys():
         patient = json_data[patient_id]
-        triplets = get_triplets_t(patient)
+        triplets = get_triplets(patient, component)
         for triplet in triplets:
-            shift = int(get_shift("normal"))
-            center_point = triplet[1] + shift
+            random_shift = int(get_shift("normal"))
+            center_point = triplet[1] + random_shift + constant_shift
             cutted = cut_from_signal(patient, center_point, leads_names, patch_len)
             if cutted is not None:
                 result.append(cutted)
-                labels.append(shift)
+                labels.append(random_shift)
     return np.array(result), np.array(labels)
 
 
