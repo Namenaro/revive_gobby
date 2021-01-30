@@ -3,7 +3,7 @@ from np_datasets_wizard.json_to_np_randomly import get_numpy_from_json
 from np_datasets_wizard.json_to_np_by_qrs import get_numpy_from_json as get_np_by_shift
 from sample_device.utils import load_json
 from settings import PATH_TO_METADATASETS_FOLDER
-
+from np_datasets_wizard.downsamplle_np_datset import downsample_dataset
 import os
 import numpy as np
 from sklearn.manifold import TSNE
@@ -26,7 +26,7 @@ def get_control_results(patch_len, control):
     ecg_patches = np.squeeze(results, axis=1)
     return ecg_patches, labels
 
-def make_experiment(controls_list, patch_len, name):
+def make_experiment(controls_list, patch_len, name, maxpool):
     """
     Saves clasterisation picture for every control from list.
     :param controls_list: list of integers
@@ -46,18 +46,23 @@ def make_experiment(controls_list, patch_len, name):
         labels_results =[1] * len(control_results)
         labels = np.concatenate((labels_results, labels_contrast), axis=0)
         ecg_patches = np.concatenate((control_results, ecg_contrast), axis=0)
+        if maxpool <2:
+            pass
+        else:
+            ecg_patches = downsample_dataset(ecg_patches, maxpool)
+        print(ecg_patches.shape)
         digits_proj = TSNE(random_state=RS).fit_transform(ecg_patches)
         scatter(digits_proj, labels)
         plt.savefig(picname)
 
-def make_seria_of_experiments(name, patch_lens,controls_list):
+def make_seria_of_experiments(name, patch_lens,controls_list, maxpool):
     print ("start seria...")
     for patch_len in patch_lens:
-        make_experiment(controls_list, patch_len, name)
+        make_experiment(controls_list, patch_len, name, maxpool)
 
 
 if __name__ == "__main__":
-    controls_list = [-100, 0, 50, 100, 150, 200, 300]
-    patch_lens = [20, 50, 100, 200, 300, 600, 1000]
+    controls_list = [ 0, 200]
+    patch_lens = [64]
     name = "TEST"
-    make_seria_of_experiments(name, patch_lens, controls_list)
+    make_seria_of_experiments(name, patch_lens, controls_list, 16)

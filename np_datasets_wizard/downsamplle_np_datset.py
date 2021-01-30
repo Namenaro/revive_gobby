@@ -10,9 +10,9 @@ import numpy as np
 from torch.autograd import Variable
 
 class Net(nn.Module):
-    def __init__(self):
+    def __init__(self, maxpool):
         super(Net, self).__init__()
-        self.down = nn.MaxPool1d(2, stride=2)
+        self.down = nn.MaxPool1d(maxpool, stride=maxpool)
 
     def forward(self, x):
         x = self.down(x)
@@ -22,15 +22,20 @@ def select_and_load_np_data():
     file_path = easygui.fileopenbox("Select json with numpy data")
     return load_np_from_json(file_path)
 
-def downsample_dataset(np_arr):
+def downsample_dataset(np_arr, maxpool):
+    initaial_shape = len(np_arr.shape)
+    if initaial_shape ==2:
+        np_arr=np.expand_dims(np_arr, axis=1)
     with torch.no_grad():
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        model = Net().to(device)
+        model = Net(maxpool).to(device)
         model.eval()
 
         FloatTensor = torch.cuda.FloatTensor if torch.cuda.is_available() else torch.FloatTensor
         data = (FloatTensor(np_arr)).to(device)
         output = model(data).cpu().detach().numpy()
+        if initaial_shape == 2:
+            output = np.squeeze(output, 1)
         return output
     return None
 
